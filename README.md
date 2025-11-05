@@ -35,7 +35,7 @@ This will start four Docker containers
 
 🗄️ **Database (MariaDB)**: Runs as a backend service with no UI. Can check example table and data **[here](./bbdd/init.sql)**
 
-> [!INFO]
+> [!NOTE]
 > Responses from from Ollama's AI (llama3) may be slow. Keep in mind that this isn't a production application. If you were to deploy something similar in a real-world environment, I'd recommend using an AI with a faster API, like ChatGPT Pro or something similar.
 
 > [!IMPORTANT]

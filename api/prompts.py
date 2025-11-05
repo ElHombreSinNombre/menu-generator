@@ -1,4 +1,4 @@
-from schemas import FoodItem, MenuRequest # ¡Ahora sin sangría al inicio!
+from schemas import FoodItem, MenuRequest
 
 def menu_prompt(prompt_input: MenuRequest):
     elements_detailed = [
