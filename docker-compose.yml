@@ -1,0 +1,68 @@
+services:
+  # BBDD
+  db:
+    build:
+      context: ./bbdd
+    container_name: menu-ddbb
+    healthcheck:
+      test: ['CMD', 'healthcheck.sh', '--connect']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MYSQL_DATABASE}
+
+  # AI
+  ai:
+    build:
+      context: ./ai
+    container_name: menu-ai
+    ports:
+      - '11434:11434'
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./ollama_data:/app/models
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:11434/api/tags']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  # API
+  api:
+    build:
+      context: ./api
+    container_name: menu-api
+    depends_on:
+      db:
+        condition: service_healthy
+      ai:
+        condition: service_started
+    ports:
+      - '8000:80'
+    env_file:
+      - .env
+    environment:
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      DATABASE_URL: ${DATABASE_URL}
+    restart: unless-stopped
+
+  # WEB
+  web:
+    build:
+      context: ./web
+    container_name: menu-web
+    depends_on:
+      - api
+    ports:
+      - '8080:80'
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+    external: false

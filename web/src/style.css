@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+body {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
+@layer base {
+  .button {
+    @apply inline-flex;
+    @apply items-center;
+    @apply my-2;
+    @apply justify-center;
+    @apply w-full;
+    @apply border;
+    @apply bg-indigo-400;
+    @apply text-white;
+    @apply py-3;
+    @apply px-4;
+    @apply rounded;
+    @apply select-none;
+    @apply transition;
+    @apply duration-500;
+    @apply ease-in-out;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white;
+    @apply shadow-md;
+    @apply rounded;
+    @apply border;
+    @apply duration-500;
+    @apply ease-in-out;
+    @apply p-6;
+    @apply m-8;
+    &:hover {
+      @apply shadow-lg border-black;
+    }
+  }
+  .center {
+    @apply grid;
+    @apply items-center;
+    @apply justify-center;
+    @apply min-h-screen;
+  }
+}
